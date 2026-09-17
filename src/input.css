@@ -71,17 +71,21 @@
     @apply font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight text-maroon-dark;
   }
 
-  .btn {
+  /* Button base utilities inlined into each variant — Tailwind v4 forbids @apply of custom classes like `btn`. */
+  .btn,
+  .btn-primary,
+  .btn-outline,
+  .btn-ghost-light {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3 text-sm font-semibold tracking-wide transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-saffron;
   }
   .btn-primary {
-    @apply btn bg-saffron text-white shadow-gold hover:bg-saffron-dark hover:-translate-y-0.5;
+    @apply bg-saffron text-white shadow-gold hover:bg-saffron-dark hover:-translate-y-0.5;
   }
   .btn-outline {
-    @apply btn border border-maroon/25 bg-white/60 text-maroon hover:bg-maroon hover:text-white;
+    @apply border border-maroon/25 bg-white/60 text-maroon hover:bg-maroon hover:text-white;
   }
   .btn-ghost-light {
-    @apply btn border border-white/40 text-white hover:bg-white hover:text-maroon;
+    @apply border border-white/40 text-white hover:bg-white hover:text-maroon;
   }
 
   .card {
