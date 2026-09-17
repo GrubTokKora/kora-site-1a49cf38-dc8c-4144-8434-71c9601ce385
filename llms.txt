@@ -1,2 +1,15 @@
 # Shirdi Sai Mandir
-Om Sai Ram · Sterling, Virginia
+> Hindu temple in Sterling (Arcola), Virginia — daily aartis, poojas, festivals and seva.
+
+- Home: /
+- About: /about.html
+- Services: /services.html
+- Events: /events.html
+- Gallery: /gallery.html
+- Sponsorship: /sponsorship.html
+- Donate: /donate.html
+- Contact: /contact.html
+
+Address: 24770 Evergreen Mills Rd, Sterling, VA 20166
+Phone: (703) 661-4724
+Website: https://saimandirva.org/

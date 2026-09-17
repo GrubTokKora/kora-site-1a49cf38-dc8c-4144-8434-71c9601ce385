@@ -4,8 +4,8 @@
 # DESIGN.md — Shirdi Sai Mandir
 
 archetype: approachable-local
-rationale: A Hindu mandir serves its community through warmth, welcome and trust — the same qualities approachable-local builds toward — and the direction gives this mandir a presence that feels genuinely inviting to devotees and newcomers alike, rather than corporate or transactional.
-interaction_level: L1
+rationale: A Hindu mandir serves its community through warmth, welcome and trust — the same qualities approachable-local builds toward — while the fuller multi-page temple site needs room for darshan photography, aarti timings, seva pathways and clear CTAs without feeling corporate or transactional.
+interaction_level: L2
 
 personality: [warm, devotional, welcoming, grounded]
 
@@ -13,38 +13,117 @@ typography:
   display: "Cormorant Garamond"
   body: "Inter"
   scale: 1.25
-  notes: H1 at 3.5rem in Cormorant Garamond, tracked slightly loose; H2 at 2.25rem; H3 at 1.5rem; body at 1.0625rem with a comfortable 1.7 line-height; the tagline set in Cormorant Garamond italic at 1.25rem; all caps labels in Inter at 0.75rem letter-spaced 0.12em
+  notes: >
+    Section titles (`.section-title`) in Cormorant Garamond at 1.875–3rem (sm/md breakpoints),
+    semibold, maroon-dark. Hero H1 at ~2.5–3.75rem Cormorant Garamond on cream. Body in Inter
+    at ~1rem / 1.7 line-height in ink / ink-soft. Eyebrows (`.eyebrow`) in Inter semibold,
+    uppercase, tracking 0.2em, saffron-dark, with a short gold hairline before the label.
+    Buttons use Inter semibold ~0.875rem, letter-spaced slightly.
 
 palette:
-  primary: "#6b1e10"
-  secondary: "#fbf6ec"
-  accent: "#ef8b1f"
-  application: Primary (#6b1e10) carries the header background, the footer band, and section divider rules. Secondary (#fbf6ec) is the page ground and tinted section bands. Accent (#ef8b1f) appears on the single CTA and as a thin decorative rule beneath the display headline — nowhere else.
+  primary: "#6B1E10"
+  secondary: "#FBF6EC"
+  accent: "#EF8B1F"
+  application: >
+    Maroon family (#6B1E10 / #4A1206 / #2E0B03) carries hero and CTA bands (maroon gradient),
+    deep footer (#2E0B03), headings, and outline-button hover. Cream (#FBF6EC / #F4EAD6) is the
+    page ground and soft section bands. Saffron (#EF8B1F) is the primary CTA fill, eyebrow
+    accents, and underline moments on nav. Gold (#C79A3B / #E4C367) appears on borders, hairline
+    rules, card edges, and soft gold shadows — never as the main page fill. Ink (#2A1A12) for
+    body; ink-soft / ink-muted for secondary copy.
 
 composition:
   whitespace: generous
-  photography: supporting
-  card_usage: none
-  mobile: Header collapses to logo mark centred above the mandir name; nav becomes a full-screen overlay on hamburger tap; hero headline drops from 3.5rem to 2rem; all multi-column layouts stack to a single column; footer stacks its groups vertically, centred
+  photography: hero
+  card_usage: selective
+  mobile: >
+    Sticky header: logo left, hamburger right; nav collapses into a stacked panel under the
+    header. Hero (`.ssm-hero`) is full viewport below the header; on mobile the mandir photo
+    stacks above the copy (image-first in DOM); on desktop copy left / media right
+    (`.ssm-split--hero`). Multi-column service/donate/sponsorship grids stack to one column.
+    Footer stacks brand + Explore + Get Involved + Visit Us into a single column.
 
 shell:
-  header: Left-aligned logo image (the URL verbatim, height 48px) beside the business name "Shirdi Sai Mandir" set in Cormorant Garamond at 1.375rem, colour #fbf6ec, no text-transform. Nav sits to the far right in Inter at 0.8125rem, colour #fbf6ec, letter-spacing 0.08em, no text-transform. Header background #6b1e10. Horizontal padding 2rem each side. Header height 72px. Not sticky — it scrolls away. On mobile: logo and name centred in a 64px header; nav items hidden behind a hamburger icon (three lines, #ef8b1f) that opens a full-screen #6b1e10 overlay with nav items stacked vertically at 1.5rem, centred, colour #fbf6ec.
-  nav: ["Home"]
-  footer: Dark band, background #6b1e10. Three groups arranged in a single centred column on all widths, separated by 2rem vertical gap. Group 1 — the mandir name "Shirdi Sai Mandir" in Cormorant Garamond at 1.25rem, colour #fbf6ec, followed immediately beneath by the tagline "Om Sai Ram · Sterling, Virginia" in Cormorant Garamond italic at 1rem, colour #ef8b1f. Group 2 — a hairline rule in #ef8b1f at 40% opacity, full width of the column. Group 3 — copyright line "© 2025 Shirdi Sai Mandir" in Inter at 0.75rem, colour #fbf6ec at 70% opacity, centred. No nav repeat. No social links. No hours. No address block (not available).
+  header: >
+    Sticky (`#site-header`), height ~5rem (h-20), background cream at 80% with backdrop blur;
+    gains a soft shadow and denser cream tint after ~20px scroll. Left: horizontal logo image
+    (Azure URL for logo banner, ~180×46 intrinsic, displayed h-10) linking home — no extra
+    filter/styling on the logo. Right desktop: nav links + primary Donate CTA (saffron pill).
+    Nav links use `.nav-link` with a saffron underline grow on hover / current page. Mobile:
+    menu button toggles `#mobile-menu` with the same links plus Donate.
+  nav: ["Home", "About", "Services", "Events", "Gallery", "Sponsorship", "Contact", "Donate"]
+  footer: >
+    Background maroon-deep (#2E0B03), cream/70 text. Four groups on desktop (brand blurb with
+    logo; Explore; Get Involved; Visit Us with address/phone/email), stacked on mobile. Logo
+    shown in original colors (no invert/filter). Bottom bar: © year · Non-profit Tax-ID
+    74-3162022 (Tax-ID in black with white outline treatment where specified) · Om Sai Ram.
 
 pages:
+  - index.html — landing: full-viewport hero, aarti strip, about preview, Baba quote, services
+    preview, featured festival, give-back cards, visit CTA
+  - about.html — history, Sai Baba, project updates, priests, directions/map
+  - services.html — poojas at temple, at home, personal requests
+  - events.html — daily/weekly/monthly poojas, featured festival, livestream, past events
+  - gallery.html — photo albums + video celebrations
+  - sponsorship.html — seva sponsorship cards
+  - donate.html — construction / dollar-a-day / sandwich seva + clay Ganesha; PDF form via Azure
+  - contact.html — address, map, volunteer, enquiry form
+  - 404.html — centred error state back to home
 
 sections:
   - id: hero
+    layout: split-editorial
+    show: index
+    spec: >
+      Full viewport height below sticky header (min-height calc(100svh - 5rem)) on maroon
+      gradient with a subtle textured overlay (bgeee.webp at low opacity). Wide container
+      (`.container-content--wide`, up to 1600px). Desktop: copy left (eyebrow, H1, one short
+      supporting sentence, two CTAs — primary saffron + ghost-light outline), temple photo
+      right (saibaba_hero.webp, full width of media column, saffron border + gold shadow — no
+      arch frame, no floating badges). Mobile: image above copy. First viewport stays lean —
+      no stats strip, no address block, no event listings in the hero itself.
+  - id: aarti-timings
+    layout: strip
+    show: index
+    spec: Daily Kakad / Madhyan / Dhoop / Shej timings as a compact band under the hero.
+  - id: about-preview
+    layout: split
+    show: index
+    spec: `.ssm-split` copy + shrine photo (banner11.webp); outline CTA to about.html.
+  - id: quote
     layout: typographic
-    show: all
-    spec: "Full-width section on the secondary ground (#fbf6ec). The single available logo image is placed centred at 120px height with a soft drop-shadow in the primary hue. Beneath it, the mandir name 'Shirdi Sai Mandir' is set in Cormorant Garamond at 3.5rem, colour #6b1e10, centred, tracked at 0.04em. Immediately below, the tagline 'Om Sai Ram · Sterling, Virginia' in Cormorant Garamond italic at 1.25rem, colour #ef8b1f, centred. A single thin horizontal rule in #ef8b1f (1px, 80px wide) sits beneath the tagline as the sole decorative moment. No button, no body copy — the mandir name and tagline are the complete statement. Section padding 6rem top, 5rem bottom. On mobile the headline drops to 2rem and the logo to 88px."
+    show: index
+    spec: Centred Baba quote on a soft cream/maroon band — display serif, no card chrome.
+  - id: services-preview
+    layout: three-up
+    show: index
+    spec: Temple / home / sponsorship teaser cards with gold-tinted borders; cards allowed
+      because each is an interactive link surface.
+  - id: featured
+    layout: split
+    show: index / events
+    spec: Featured festival (e.g. Ganesha Navarathri) with event flyer imagery; one purpose,
+      one headline, short support, CTA.
+  - id: give-back
+    layout: card-grid
+    show: index
+    spec: Four linked cards into donate/sponsorship anchors.
+  - id: visit-cta
+    layout: band
+    show: index
+    spec: Maroon CTA band with directions + contact buttons.
+  - id: page-hero
+    layout: banner
+    show: interior pages
+    spec: Shorter interior hero on maroon with soft bgeee overlay, section title + one line
+      of support — not a second full-viewport photo hero.
 
 avoid:
-  - a three-column icon grid of "Peace · Community · Devotion" or similar generic virtue labels
-  - stock photography of temples or deities not belonging to this mandir
-  - a hero photograph behind text (only one image available and it is the logo)
-  - any invented services, events, hours or contact details
-  - a contact form (no email address available to receive submissions)
-  - decorative badge clip-art or gradient overlays
-  - the word "solutions" or any corporate register language
+  - purple-on-white or purple-to-indigo gradient themes
+  - flat single-color heroes with no atmosphere
+  - inset / side-panel / rounded floating hero media cards
+  - detached promo badges or chips overlaid on hero photography
+  - inventing darshan hours, events, or contact details not provided by the mandir
+  - filtering or recoloring the logo (keep original brand colors in header and footer)
+  - corporate register language ("solutions", "synergy", etc.)
+  - stock temple photography that is not this mandir's own imagery
