@@ -36,14 +36,13 @@ sections:
 
 ## events.html → /events
 title: Events & Poojas | Shirdi Sai Mandir, Sterling VA
-purpose: Daily/weekly/monthly poojas, featured festivals, livestream, past events.
+purpose: Daily/weekly/monthly poojas, featured festivals, livestream.
 sections:
 - Daily aartis & timings
 - `#weekly` — Weekly Poojas
 - `#monthly` — Monthly Poojas
 - `#events-calendar` — Events Calendar & Celebrations (Calendar & List view)
 - `#livestream` — Aarti Live Stream
-- `#past-events` — Recent past events
 
 ## gallery.html → /gallery
 title: Gallery | Shirdi Sai Mandir, Sterling VA
