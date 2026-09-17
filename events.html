@@ -55,7 +55,8 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&amp;family=Inter:wght@400;600;700&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&amp;family=Inter:wght@400;600;700&amp;display=swap"></noscript>
 <!-- KORA_GOOGLE_FONTS_END -->
-<!-- KORA_FAVICON_START -->
+
+</link></link><!-- KORA_FAVICON_START -->
 <link href="https://quseprdus1.blob.core.windows.net/kora-business-images/v2-uploads/1a49cf38-dc8c-4144-8434-71c9601ce385/6e85b310-bb9f-4dab-8487-bb13da7beb59-favicon.png" rel="icon" type="image/png"/>
 <link href="https://quseprdus1.blob.core.windows.net/kora-business-images/v2-uploads/1a49cf38-dc8c-4144-8434-71c9601ce385/6e85b310-bb9f-4dab-8487-bb13da7beb59-favicon.png" rel="apple-touch-icon"/>
 <!-- KORA_FAVICON_END -->
@@ -137,6 +138,76 @@
 </div>
 </div>
 </section>
+<!-- Events Section (Calendar & List) -->
+<section class="py-16 sm:py-20 bg-cream-deep/40" id="events-calendar">
+<div class="container-content">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-gold/20">
+<div>
+<span class="eyebrow">Schedule &amp; Festivals</span>
+<h2 class="section-title mt-3">Events &amp; Celebrations</h2>
+<p class="mt-2 text-ink-soft max-w-xl">Explore temple festivals, special homams, and sacred celebrations. Switch between Calendar and List view below.</p>
+</div>
+<!-- View Toggle -->
+<div aria-label="Event view toggle" class="inline-flex p-1 bg-gold/15 rounded-full border border-gold/30 self-start md:self-auto" role="tablist">
+<button aria-controls="events-calendar-view" aria-selected="true" class="px-5 py-2 text-sm font-semibold rounded-full bg-saffron text-white shadow-sm transition-all cursor-pointer" id="tab-calendar" role="tab" type="button">Calendar</button>
+<button aria-controls="events-list-view" aria-selected="false" class="px-5 py-2 text-sm font-semibold rounded-full text-maroon hover:text-saffron-dark transition-all cursor-pointer" id="tab-list" role="tab" type="button">List</button>
+</div>
+</div>
+<!-- Calendar View (Default) -->
+<div class="mt-8 transition-opacity duration-300" id="events-calendar-view">
+<div class="flex items-center justify-between flex-wrap gap-4 mb-6 bg-white p-4 sm:p-5 rounded-2xl border border-gold/20 shadow-card">
+<div class="flex items-center gap-3">
+<h3 class="font-serif text-2xl sm:text-3xl font-semibold text-maroon-dark" id="cal-month-year"></h3>
+<span class="text-xs px-2.5 py-1 rounded-full bg-gold/15 text-maroon-dark font-medium hidden sm:inline-block" id="cal-event-count">0 events</span>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Previous month" class="w-9 h-9 flex items-center justify-center rounded-full border border-gold/40 hover:bg-gold/15 text-maroon font-bold transition-colors cursor-pointer" id="cal-prev" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+</button>
+<button class="px-3.5 py-1.5 text-xs font-semibold rounded-full border border-gold/40 hover:bg-gold/15 text-maroon transition-colors cursor-pointer" id="cal-today" type="button">Today</button>
+<button aria-label="Next month" class="w-9 h-9 flex items-center justify-center rounded-full border border-gold/40 hover:bg-gold/15 text-maroon font-bold transition-colors cursor-pointer" id="cal-next" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+</button>
+</div>
+</div>
+<div class="bg-white p-3 sm:p-6 rounded-2xl border border-gold/20 shadow-card">
+<div class="grid grid-cols-7 gap-1 sm:gap-2 mb-2 text-center text-xs font-semibold uppercase tracking-wider text-ink-muted">
+<div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+</div>
+<div class="grid grid-cols-7 gap-1 sm:gap-2" id="cal-days-grid"></div>
+</div>
+</div>
+<!-- List View -->
+<div class="mt-8 hidden" id="events-list-view">
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="events-list-grid"></div>
+</div>
+</div>
+</section>
+<!-- Event Detail Modal -->
+<div aria-labelledby="modal-event-title" aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden" id="event-detail-modal" role="dialog">
+<div class="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gold/30">
+<button aria-label="Close dialog" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-cream/90 text-maroon hover:bg-maroon hover:text-white flex items-center justify-center transition-colors shadow-sm cursor-pointer" id="modal-close-btn" type="button">✕</button>
+<div class="w-full h-60 sm:h-72 overflow-hidden bg-cream-deep hidden" id="modal-image-container">
+<img alt="" class="w-full h-full object-cover" id="modal-event-image" src=""/>
+</div>
+<div class="p-6 sm:p-8">
+<div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-saffron-dark">
+<svg aria-hidden="true" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+<span id="modal-event-date"></span>
+</div>
+<h3 class="font-serif text-2xl sm:text-3xl font-semibold text-maroon-dark mt-2" id="modal-event-title"></h3>
+<div class="flex items-start gap-2 mt-3 text-xs sm:text-sm text-ink-muted">
+<svg aria-hidden="true" class="w-4 h-4 shrink-0 mt-0.5 text-gold-dark" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a7 7 0 0114 0c0 5.5-7 10-7 10z"></path><circle cx="12" cy="11" r="2.5"></circle></svg>
+<span id="modal-event-location"></span>
+</div>
+<p class="mt-4 text-sm sm:text-base font-medium text-ink leading-relaxed" id="modal-event-short"></p>
+<div class="mt-4 pt-4 border-t border-gold/15 text-sm text-ink-soft leading-relaxed space-y-3" id="modal-event-full"></div>
+<div class="mt-6 pt-4 border-t border-gold/15 hidden" id="modal-cta-container">
+<a class="btn-primary" href="" id="modal-event-ticket" rel="noopener noreferrer" target="_blank">Register / Book</a>
+</div>
+</div>
+</div>
+</div>
 <!-- Ganesha Navarathri feature -->
 <section class="py-20 sm:py-24 mt-8 bg-cream-deep/60" id="ganesha-navarathri">
 <div class="container-content grid lg:grid-cols-2 gap-12 items-center">
@@ -204,6 +275,414 @@
 </div>
 </footer>
 <script defer="" src="js/main.js"></script>
+<script>
+(function() {
+  var templeEvents = [
+    {
+      id: "9d857f66-d02a-4c09-b753-5eacb5b7eb89",
+      title: "Ganesha Navarathri 2026",
+      short_description: "Join us at Shirdi Sai Mandir for nine sacred days of Ganesha Navarathri celebrations, beginning with a joyful Ganesha procession and culminating in Ganapathi Nimarjanam on September 22nd.",
+      full_description: "Shirdi Sai Mandir warmly invites all devotees and families to celebrate Ganesha Navarathri 2026, a beloved nine-day festival honoring Lord Ganesha, the remover of obstacles and bestower of blessings. Join our community in Sterling, Virginia for daily poojas, special rituals, and sacred gatherings that bring together hearts in devotion.\n\nThe festivities begin on Sunday, September 13th at 7:30 PM with a vibrant Ganesha Procession accompanied by the traditional Dhol, filling the Mandir grounds with joy and sacred energy.\n\nGanesha Chaturthi, Monday September 14th, is the heart of the celebration. The day opens at 9:30 AM with Ganapathi Abhishekam, followed by Kalasa and Ganapathi Sthapana at 10:00 AM. In the evening at 6:30 PM, children are invited to participate in a special Kids Ganesha Pooja, followed by the main Ganesha Pooja for all devotees.\n\nFrom Tuesday, September 15th through Tuesday, September 22nd, daily Ganesha Pooja will be offered each evening at 6:30 PM. On Saturday, September 19th, a special Ganapathi Homam will be performed at 10:00 AM, a powerful fire ritual invoking Lord Ganesha's divine grace.\n\nThe celebrations conclude on Wednesday, September 22nd with Ganapathi Nimarjanam at 6:30 PM, a deeply moving farewell ceremony as we bid Lord Ganesha a loving goodbye until next year. All are welcome to attend any or all of these sacred observances. Come, offer your prayers, and experience the warmth of our temple community. Om Sai Ram.",
+      start_datetime: "2026-09-19T04:30:00+00:00",
+      end_datetime: "",
+      timezone: "",
+      location_text: "24770 Evergreen Mills Rd, Sterling (Arcola), VA 20166, USA",
+      category: "festival",
+      slug: "",
+      ticket_url: "",
+      hero_image_url: "https://quseprdus1.blob.core.windows.net/kora-business-images/v2-uploads/1a49cf38-dc8c-4144-8434-71c9601ce385/6515d79b-145e-4088-a6ea-df42674bb42b-event_ganesha_navarathri_2026.webp"
+    },
+    {
+      id: "guru-poornima-2026",
+      title: "Guru Poornima 2026",
+      short_description: "A sacred celebration honoring Sadguru Sri Shirdi Sai Baba with special abhishekams, poojas, and bhajans.",
+      full_description: "Guru Poornima is an auspicious occasion dedicated to expressing gratitude and reverence to the Guru. Join the Shirdi Sai Mandir family for a full day of sacred offerings, special floral alankaram, continuous Sai bhajans, and maha prasadam.",
+      start_datetime: "2026-07-30T09:00:00",
+      end_datetime: "",
+      timezone: "",
+      location_text: "24770 Evergreen Mills Rd, Sterling (Arcola), VA 20166, USA",
+      category: "festival",
+      slug: "",
+      ticket_url: "",
+      hero_image_url: ""
+    },
+    {
+      id: "rudra-yagna-2026",
+      title: "Maha Rudra Yagna — Siva Sakthi Sahasra Chandi",
+      short_description: "A grand 5-day Maha Rudra Yagna invoking divine grace, health, and global peace.",
+      full_description: "Experience the profound divine vibrations of the Maha Rudra Yagna & Siva Sakthi Sahasra Chandi at Shirdi Sai Mandir. Dedicated Vedic priests chant sacred hymns and offer continuous havan rituals for peace, harmony, and prosperity.",
+      start_datetime: "2026-09-03T08:00:00",
+      end_datetime: "",
+      timezone: "",
+      location_text: "24770 Evergreen Mills Rd, Sterling (Arcola), VA 20166, USA",
+      category: "festival",
+      slug: "",
+      ticket_url: "",
+      hero_image_url: ""
+    },
+    {
+      id: "pavithrothsavam-2026",
+      title: "Baba Pavithrothsavam 2026",
+      short_description: "Annual purification and consecration festival honoring Shirdi Sai Baba.",
+      full_description: "The annual Pavithrothsavam is observed to purify and elevate the temple sanctum. Devotees participate in sanctified thread offerings, special poojas, and receive sanctified prasad.",
+      start_datetime: "2026-05-13T09:00:00",
+      end_datetime: "",
+      timezone: "",
+      location_text: "24770 Evergreen Mills Rd, Sterling (Arcola), VA 20166, USA",
+      category: "festival",
+      slug: "",
+      ticket_url: "",
+      hero_image_url: ""
+    },
+    {
+      id: "ugadhi-rama-navami-2026",
+      title: "Ugadhi, Vasantha Navarathri & Rama Navami",
+      short_description: "New Year festivities, spring Navarathri poojas, and Sri Rama Navami celebrations.",
+      full_description: "Celebrate the Telugu New Year (Ugadhi) followed by nine sacred days of Vasantha Navarathri leading up to Sri Rama Navami. Special panchangam sravanam, Sri Sita Rama Kalyanam, and devotional offerings.",
+      start_datetime: "2026-03-27T09:00:00",
+      end_datetime: "",
+      timezone: "",
+      location_text: "24770 Evergreen Mills Rd, Sterling (Arcola), VA 20166, USA",
+      category: "festival",
+      slug: "",
+      ticket_url: "",
+      hero_image_url: ""
+    },
+    {
+      id: "shivarathri-2026",
+      title: "Maha Shivarathri 2026",
+      short_description: "All-night vigil, continuous Shiva Abhishekam, and sacred chanting.",
+      full_description: "Observe Maha Shivarathri in deep meditation and worship. Four prahara abhishekams, Bilva archana, continuous Maha Mrityunjaya and Om Namah Shivaya chanting throughout the holy night.",
+      start_datetime: "2026-02-17T18:00:00",
+      end_datetime: "",
+      timezone: "",
+      location_text: "24770 Evergreen Mills Rd, Sterling (Arcola), VA 20166, USA",
+      category: "festival",
+      slug: "",
+      ticket_url: "",
+      hero_image_url: ""
+    },
+    {
+      id: "hanuman-jayanthi-2025",
+      title: "Hanuman Jayanthi 2025",
+      short_description: "Celebration of Sri Hanuman with 11x Hanuman Chalisa chanting and sindoor archana.",
+      full_description: "Celebrate the birth anniversary of Sri Hanuman. Devotees join in chanting the Hanuman Chalisa 11 times, Sri Rama Raksha Stotram, and offering betel leaf garlands and sindoor to Lord Hanuman.",
+      start_datetime: "2025-12-20T09:00:00",
+      end_datetime: "",
+      timezone: "",
+      location_text: "24770 Evergreen Mills Rd, Sterling (Arcola), VA 20166, USA",
+      category: "festival",
+      slug: "",
+      ticket_url: "",
+      hero_image_url: ""
+    },
+    {
+      id: "chandi-yagnam-2025",
+      title: "Satha Chandi Maha Yagnam & Devi Navarathri",
+      short_description: "Nine nights of Devi Navarathri and grand Satha Chandi Yagnam.",
+      full_description: "Celebrate the divine mother through Devi Navarathri alankarams, Lalitha Sahasranama archana, and the culminating Satha Chandi Maha Yagnam for universal peace and protection.",
+      start_datetime: "2025-10-06T09:00:00",
+      end_datetime: "",
+      timezone: "",
+      location_text: "24770 Evergreen Mills Rd, Sterling (Arcola), VA 20166, USA",
+      category: "festival",
+      slug: "",
+      ticket_url: "",
+      hero_image_url: ""
+    },
+    {
+      id: "ganesha-navarathri-2025",
+      title: "Ganesha Navarathri 2025",
+      short_description: "Nine sacred days of Ganesha celebrations, poojas, and Ganapathi Homam.",
+      full_description: "Annual Ganesha Navarathri festival featuring clay Ganesha sthapana, kids and family poojas, daily cultural performances, and traditional immersion ceremony.",
+      start_datetime: "2025-09-05T09:00:00",
+      end_datetime: "",
+      timezone: "",
+      location_text: "24770 Evergreen Mills Rd, Sterling (Arcola), VA 20166, USA",
+      category: "festival",
+      slug: "",
+      ticket_url: "",
+      hero_image_url: ""
+    },
+    {
+      id: "krishna-janmashtami-2025",
+      title: "Krishna Janmashtami",
+      short_description: "Joyful celebration of Lord Krishna's birth with midnight aarti and uyyala seva.",
+      full_description: "Celebrate Krishna Janmashtami with midnight Krishna Jananam pooja, swinging baby Krishna in the cradle (Uyyala seva), devotional songs, and butter offerings.",
+      start_datetime: "2025-08-17T18:00:00",
+      end_datetime: "",
+      timezone: "",
+      location_text: "24770 Evergreen Mills Rd, Sterling (Arcola), VA 20166, USA",
+      category: "festival",
+      slug: "",
+      ticket_url: "",
+      hero_image_url: ""
+    }
+  ];
+
+  function parseEventDate(dateStr) {
+    if (!dateStr) return { year: 1970, month: 0, day: 1 };
+    var m = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (m) {
+      return {
+        year: parseInt(m[1], 10),
+        month: parseInt(m[2], 10) - 1,
+        day: parseInt(m[3], 10)
+      };
+    }
+    var d = new Date(dateStr);
+    return {
+      year: d.getFullYear(),
+      month: d.getMonth(),
+      day: d.getDate()
+    };
+  }
+
+  var calDate = new Date();
+  var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  var monthAbbr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  function openModal(ev) {
+    var modal = document.getElementById("event-detail-modal");
+    if (!modal) return;
+    var titleEl = document.getElementById("modal-event-title");
+    var dateEl = document.getElementById("modal-event-date");
+    var locEl = document.getElementById("modal-event-location");
+    var shortEl = document.getElementById("modal-event-short");
+    var fullEl = document.getElementById("modal-event-full");
+    var imgBox = document.getElementById("modal-image-container");
+    var imgEl = document.getElementById("modal-event-image");
+    var ctaBox = document.getElementById("modal-cta-container");
+    var ticketEl = document.getElementById("modal-event-ticket");
+
+    titleEl.textContent = ev.title;
+    var p = parseEventDate(ev.start_datetime);
+    var dObj = new Date(p.year, p.month, p.day);
+    dateEl.textContent = dayNames[dObj.getDay()] + ", " + monthNames[p.month] + " " + p.day + ", " + p.year;
+    locEl.textContent = ev.location_text || "24770 Evergreen Mills Rd, Sterling (Arcola), VA 20166, USA";
+    shortEl.textContent = ev.short_description || "";
+
+    fullEl.innerHTML = "";
+    if (ev.full_description) {
+      var paras = ev.full_description.split("\n\n");
+      paras.forEach(function(pt) {
+        if (pt.trim()) {
+          var pElem = document.createElement("p");
+          pElem.textContent = pt.trim();
+          fullEl.appendChild(pElem);
+        }
+      });
+    }
+
+    if (ev.hero_image_url && ev.hero_image_url.trim()) {
+      imgEl.src = ev.hero_image_url;
+      imgEl.alt = ev.title;
+      imgBox.classList.remove("hidden");
+    } else {
+      imgBox.classList.add("hidden");
+      imgEl.src = "";
+    }
+
+    if (ev.ticket_url && ev.ticket_url.trim()) {
+      ticketEl.href = ev.ticket_url;
+      ctaBox.classList.remove("hidden");
+    } else {
+      ctaBox.classList.add("hidden");
+      ticketEl.href = "";
+    }
+
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    var modal = document.getElementById("event-detail-modal");
+    if (modal) modal.classList.add("hidden");
+    document.body.style.overflow = "";
+  }
+
+  function renderCalendar() {
+    var grid = document.getElementById("cal-days-grid");
+    var titleEl = document.getElementById("cal-month-year");
+    var countEl = document.getElementById("cal-event-count");
+    if (!grid || !titleEl) return;
+
+    var y = calDate.getFullYear();
+    var m = calDate.getMonth();
+    titleEl.textContent = monthNames[m] + " " + y;
+
+    var firstDay = new Date(y, m, 1).getDay();
+    var daysInMonth = new Date(y, m + 1, 0).getDate();
+
+    grid.innerHTML = "";
+    var count = 0;
+
+    for (var i = 0; i < firstDay; i++) {
+      var emptyCell = document.createElement("div");
+      emptyCell.className = "min-h-[72px] sm:min-h-[96px] p-1.5 sm:p-2 rounded-xl bg-cream/40 border border-transparent";
+      grid.appendChild(emptyCell);
+    }
+
+    for (var day = 1; day <= daysInMonth; day++) {
+      var cell = document.createElement("div");
+      cell.className = "min-h-[72px] sm:min-h-[96px] p-1.5 sm:p-2 rounded-xl bg-white border border-gold/20 flex flex-col justify-between transition-all hover:border-gold hover:shadow-sm";
+
+      var topRow = document.createElement("div");
+      topRow.className = "flex items-center justify-between";
+      var num = document.createElement("span");
+      num.className = "text-xs sm:text-sm font-medium text-ink-soft";
+      num.textContent = day;
+      topRow.appendChild(num);
+      cell.appendChild(topRow);
+
+      var eventListDiv = document.createElement("div");
+      eventListDiv.className = "space-y-1 mt-1";
+
+      var evMatches = templeEvents.filter(function(ev) {
+        var ep = parseEventDate(ev.start_datetime);
+        return ep.year === y && ep.month === m && ep.day === day;
+      });
+
+      if (evMatches.length > 0) {
+        count += evMatches.length;
+        cell.classList.add("bg-cream/40", "border-gold/40");
+        cell.style.cursor = "pointer";
+        (function(targetEv) {
+          cell.addEventListener("click", function() {
+            openModal(targetEv);
+          });
+        })(evMatches[0]);
+
+        evMatches.forEach(function(ev) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "w-full text-left p-1 sm:p-1.5 rounded-lg bg-saffron/15 border border-saffron/40 hover:bg-saffron text-maroon-dark hover:text-white text-[10px] sm:text-xs font-semibold truncate transition-colors cursor-pointer block";
+          btn.textContent = ev.title;
+          btn.title = ev.title;
+          btn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            openModal(ev);
+          });
+          eventListDiv.appendChild(btn);
+        });
+      }
+
+      cell.appendChild(eventListDiv);
+      grid.appendChild(cell);
+    }
+
+    if (countEl) {
+      countEl.textContent = count + " event" + (count === 1 ? "" : "s");
+    }
+  }
+
+  function renderList() {
+    var listGrid = document.getElementById("events-list-grid");
+    if (!listGrid) return;
+    listGrid.innerHTML = "";
+
+    templeEvents.forEach(function(ev) {
+      var p = parseEventDate(ev.start_datetime);
+      var formattedDate = monthAbbr[p.month] + " " + p.day + ", " + p.year;
+
+      var card = document.createElement("div");
+      card.className = "card card-hover overflow-hidden flex flex-col justify-between group cursor-pointer border border-gold/20";
+
+      var imgMarkup = "";
+      if (ev.hero_image_url && ev.hero_image_url.trim()) {
+        imgMarkup = '<div class="h-44 w-full overflow-hidden bg-cream-deep"><img src="' + ev.hero_image_url + '" alt="' + ev.title.replace(/"/g, '&quot;') + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy"></div>';
+      }
+
+      card.innerHTML = imgMarkup +
+        '<div class="p-6 flex-1 flex flex-col justify-between">' +
+          '<div>' +
+            '<div class="flex items-center gap-2 text-xs font-semibold text-saffron-dark uppercase tracking-wider">' +
+              '<span class="inline-block w-2 h-2 rounded-full bg-saffron"></span>' +
+              formattedDate +
+            '</div>' +
+            '<h3 class="font-serif text-xl font-semibold text-maroon-dark mt-2 group-hover:text-saffron-dark transition-colors">' + ev.title + '</h3>' +
+            '<p class="mt-2 text-sm text-ink-soft line-clamp-3">' + (ev.short_description || "") + '</p>' +
+          '</div>' +
+          '<div class="mt-5 pt-4 border-t border-gold/15 flex items-center justify-between">' +
+            '<span class="text-xs text-ink-muted truncate max-w-[170px]">' + (ev.location_text || "") + '</span>' +
+            '<span class="text-xs font-semibold text-maroon hover:text-saffron-dark shrink-0 flex items-center gap-1">Details →</span>' +
+          '</div>' +
+        '</div>';
+
+      card.addEventListener("click", function() {
+        openModal(ev);
+      });
+      listGrid.appendChild(card);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    var tabCal = document.getElementById("tab-calendar");
+    var tabList = document.getElementById("tab-list");
+    var calView = document.getElementById("events-calendar-view");
+    var listView = document.getElementById("events-list-view");
+
+    if (tabCal && tabList && calView && listView) {
+      tabCal.addEventListener("click", function() {
+        tabCal.className = "px-5 py-2 text-sm font-semibold rounded-full bg-saffron text-white shadow-sm transition-all cursor-pointer";
+        tabCal.setAttribute("aria-selected", "true");
+        tabList.className = "px-5 py-2 text-sm font-semibold rounded-full text-maroon hover:text-saffron-dark transition-all cursor-pointer";
+        tabList.setAttribute("aria-selected", "false");
+        calView.classList.remove("hidden");
+        listView.classList.add("hidden");
+      });
+
+      tabList.addEventListener("click", function() {
+        tabList.className = "px-5 py-2 text-sm font-semibold rounded-full bg-saffron text-white shadow-sm transition-all cursor-pointer";
+        tabList.setAttribute("aria-selected", "true");
+        tabCal.className = "px-5 py-2 text-sm font-semibold rounded-full text-maroon hover:text-saffron-dark transition-all cursor-pointer";
+        tabCal.setAttribute("aria-selected", "false");
+        listView.classList.remove("hidden");
+        calView.classList.add("hidden");
+      });
+    }
+
+    var prevBtn = document.getElementById("cal-prev");
+    var nextBtn = document.getElementById("cal-next");
+    var todayBtn = document.getElementById("cal-today");
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function() {
+        calDate.setMonth(calDate.getMonth() - 1);
+        renderCalendar();
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function() {
+        calDate.setMonth(calDate.getMonth() + 1);
+        renderCalendar();
+      });
+    }
+    if (todayBtn) {
+      todayBtn.addEventListener("click", function() {
+        calDate = new Date();
+        renderCalendar();
+      });
+    }
+
+    var modal = document.getElementById("event-detail-modal");
+    var closeBtn = document.getElementById("modal-close-btn");
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (modal) {
+      modal.addEventListener("click", function(e) {
+        if (e.target === modal) closeModal();
+      });
+    }
+    window.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closeModal();
+    });
+
+    renderCalendar();
+    renderList();
+  });
+})();
+</script>
 <!-- KORA_BRANDING_FOOTER_SCRIPT_START -->
 <script>
 (function () {
