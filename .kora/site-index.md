@@ -41,6 +41,7 @@ sections:
 - Daily aartis & timings
 - `#weekly` — Weekly Poojas
 - `#monthly` — Monthly Poojas
+- `#events-schedule` — Events calendar & list (Ganesha Navarathri 2026)
 - `#ganesha-navarathri` — Ganesha Navarathri 2026
 - `#livestream` — Aarti Live Stream
 - `#past-events` — Recent past events
