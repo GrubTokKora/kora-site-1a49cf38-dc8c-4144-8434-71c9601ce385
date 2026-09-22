@@ -26,6 +26,17 @@ sections:
 - `#priests` — Our Priests
 - `#directions` — Find us
 
+## calendar.html → /calendar
+title: Yearly Festival Calendar | Shirdi Sai Mandir, Sterling VA
+purpose: Full yearly festival and events calendar for Shirdi Sai Mandir in Sterling, VA.
+sections:
+- Hero — "Shirdi Sai Mandir – Yearly Festival Calendar"
+- Daily aarti timings strip
+- Festival Calendar — celebrations month by month
+- Recurring sevas at the mandir
+- Sai Baba quote
+- Stay Connected
+
 ## services.html → /services
 title: Services & Poojas | Shirdi Sai Mandir, Sterling VA
 purpose: Poojas at the temple, at home, and personal pooja requests.

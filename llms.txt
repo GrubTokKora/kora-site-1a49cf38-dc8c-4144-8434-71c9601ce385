@@ -1,15 +1,25 @@
 # Shirdi Sai Mandir
-> Hindu temple in Sterling (Arcola), Virginia — daily aartis, poojas, festivals and seva.
 
-- Home: /
-- About: /about.html
-- Services: /services.html
-- Events: /events.html
-- Gallery: /gallery.html
-- Sponsorship: /sponsorship.html
-- Donate: /donate.html
-- Contact: /contact.html
+> Shirdi Sai Mandir — Om Sai Ram · Sterling, Virginia
 
-Address: 24770 Evergreen Mills Rd, Sterling, VA 20166
-Phone: (703) 661-4724
-Website: https://saimandirva.org/
+## Location & Contact
+- Address: 24770 Evergreen Mills Rd, Sterling, VA 20166, United States
+- Phone: +17036614724
+
+## Hours
+- Monday: 8:00 AM–12:30 PM, 6:00 PM–9:00 PM
+- Tuesday: 8:00 AM–12:30 PM, 6:00 PM–9:00 PM
+- Wednesday: 8:00 AM–12:30 PM, 6:00 PM–9:00 PM
+- Thursday: 8:00 AM–12:30 PM, 6:00 PM–9:00 PM
+- Friday: 8:00 AM–12:30 PM, 6:00 PM–9:00 PM
+- Saturday: 8:00 AM–9:00 PM
+- Sunday: 8:00 AM–9:00 PM
+
+## Action Links
+- [Reserve a Table](https://saimandirva.org/contact.html)
+- [Donate](https://saimandirva.org/donate.html)
+
+## Social
+- [Facebook](https://www.facebook.com/groups/shirdisaimandir)
+- [Twitter](https://twitter.com/ShirdiSaiMandir)
+- [YouTube](https://www.youtube.com/user/shirdisaimandir/)
