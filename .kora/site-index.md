@@ -42,6 +42,7 @@ sections:
 - `#weekly` — Weekly Poojas
 - `#monthly` — Monthly Poojas
 - `#events-calendar` — Events Calendar & Celebrations (Calendar & List view)
+- `#yearly-calendar` — Yearly Calendar (PDF embed & download)
 - `#livestream` — Aarti Live Stream
 
 ## gallery.html → /gallery
