@@ -19,8 +19,8 @@
   --color-ink-soft: #5A4438;
   --color-ink-muted: #8A7565;
 
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-sans: Inter, system-ui, -apple-system, sans-serif;
+  --font-serif: var(--kora-font-heading, "Cormorant Garamond"), Georgia, serif;
+  --font-sans: var(--kora-font-body, Inter), system-ui, -apple-system, sans-serif;
 
   --shadow-soft: 0 10px 40px -12px rgba(46, 11, 3, 0.18);
   --shadow-card: 0 4px 24px -8px rgba(46, 11, 3, 0.14);
@@ -173,3 +173,6 @@
   .ssm-split--hero .ssm-hero-copy{order:1}
   .ssm-split--hero .ssm-hero-media{order:2}
 }
+
+/* Kora fonts: this site's own Google link never asked for optical sizing (Inter), so keep the look it was approved with. */
+@layer base { html { font-optical-sizing: none; } }
