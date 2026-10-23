@@ -184,8 +184,8 @@
 <div aria-labelledby="modal-event-title" aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden" id="event-detail-modal" role="dialog">
 <div class="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gold/30">
 <button aria-label="Close dialog" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-cream/90 text-maroon hover:bg-maroon hover:text-white flex items-center justify-center transition-colors shadow-sm cursor-pointer" id="modal-close-btn" type="button">✕</button>
-<div class="w-full h-60 sm:h-72 overflow-hidden bg-cream-deep hidden" id="modal-image-container">
-<img alt="" class="w-full h-full object-cover" id="modal-event-image" src=""/>
+<div class="w-full max-h-[70vh] overflow-hidden bg-cream-deep flex items-center justify-center hidden" id="modal-image-container">
+<img alt="" class="w-full h-auto max-h-[70vh] object-contain" id="modal-event-image" src=""/>
 </div>
 <div class="p-6 sm:p-8">
 <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-saffron-dark">
@@ -258,6 +258,20 @@ Download PDF
 <script>
 (function() {
   var templeEvents = [
+    {
+      id: "7a2aeb5d-940a-48ea-8659-8bbb0889bc33",
+      title: "Karthikamaasa Poojas",
+      short_description: "Join Shirdi Sai Mandir in Sterling for Karthikamaasa Poojas, a prayerful observance during one of the most auspicious months in the Hindu calendar. All devotees and families are welcome.",
+      full_description: "Om Sai Ram. Shirdi Sai Mandir invites you to Karthikamaasa Poojas, a time of devotion, light and prayer during the sacred month of Karthika.\n\nKarthikamaasa is traditionally observed with prayer, lamp offerings and quiet reflection. Come begin the day with the blessings of Shirdi Sai Baba in the peaceful setting of our temple.\n\nDevotees and families from across Northern Virginia and the DMV are welcome to take part, whether you are a longtime member of the Mandir community or visiting for the first time.\n\nPlease register using the link provided so the temple can plan for your visit. Come together in faith, seva and community.",
+      start_datetime: "2026-11-04T09:00:00+00:00",
+      end_datetime: "",
+      timezone: "",
+      location_text: "",
+      category: "religious observance",
+      slug: "",
+      ticket_url: "https://askkora.ai",
+      hero_image_url: "https://quseprdus1.blob.core.windows.net/kora-business-images/v2-uploads/1a49cf38-dc8c-4144-8434-71c9601ce385/a3fb71a7-346e-4b69-9b4a-5001f824be75-saibaba_hero.webp"
+    },
     {
       id: "9d857f66-d02a-4c09-b753-5eacb5b7eb89",
       title: "Ganesha Navarathri 2026",
@@ -571,7 +585,7 @@ Download PDF
 
       var imgMarkup = "";
       if (ev.hero_image_url && ev.hero_image_url.trim()) {
-        imgMarkup = '<div class="h-44 w-full overflow-hidden bg-cream-deep"><img src="' + ev.hero_image_url + '" alt="' + ev.title.replace(/"/g, '&quot;') + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy"></div>';
+        imgMarkup = '<div class="h-48 w-full overflow-hidden bg-cream-deep flex items-center justify-center p-2"><img src="' + ev.hero_image_url + '" alt="' + ev.title.replace(/"/g, '&quot;') + '" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy"></div>';
       }
 
       card.innerHTML = imgMarkup +
