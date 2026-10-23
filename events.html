@@ -147,7 +147,8 @@
 <!-- View Toggle -->
 <div aria-label="Event view toggle" class="inline-flex p-1 bg-gold/15 rounded-full border border-gold/30 self-start md:self-auto" role="tablist">
 <button aria-controls="events-calendar-view" aria-selected="true" class="px-5 py-2 text-sm font-semibold rounded-full bg-saffron text-white shadow-sm transition-all cursor-pointer" id="tab-calendar" role="tab" type="button">Calendar</button>
-<button aria-controls="events-list-view" aria-selected="false" class="px-5 py-2 text-sm font-semibold rounded-full text-maroon hover:text-saffron-dark transition-all cursor-pointer" id="tab-list" role="tab" type="button">List</button>
+<button aria-controls="events-list-view" aria-selected="false" class="px-5 py-2 text-sm font-semibold rounded-full text-maroon hover:text-saffron-dark transition-all cursor-pointer" id="tab-list" role="tab" type="button">Upcoming Events</button>
+<button aria-controls="events-list-view" aria-selected="false" class="px-5 py-2 text-sm font-semibold rounded-full text-maroon hover:text-saffron-dark transition-all cursor-pointer" id="tab-past" role="tab" type="button">Past Events</button>
 </div>
 </div>
 <!-- Calendar View (Default) -->
@@ -176,7 +177,15 @@
 </div>
 <!-- List View -->
 <div class="mt-8 hidden" id="events-list-view">
-<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="events-list-grid"></div>
+<div class="flex items-center justify-between flex-wrap gap-4 mb-6">
+<div aria-label="Events list filter" class="inline-flex p-1 bg-gold/15 rounded-full border border-gold/30" role="tablist">
+<button aria-controls="events-upcoming-grid" aria-selected="true" class="px-5 py-2 text-sm font-semibold rounded-full bg-saffron text-white shadow-sm transition-all cursor-pointer" id="list-tab-upcoming" role="tab" type="button">Upcoming Events</button>
+<button aria-controls="events-past-grid" aria-selected="false" class="px-5 py-2 text-sm font-semibold rounded-full text-maroon hover:text-saffron-dark transition-all cursor-pointer" id="list-tab-past" role="tab" type="button">Past Events</button>
+</div>
+<p class="text-xs text-ink-muted" id="events-list-summary"></p>
+</div>
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="events-upcoming-grid"></div>
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 hidden" id="events-past-grid"></div>
 </div>
 </div>
 </section>
@@ -571,70 +580,183 @@ Download PDF
     }
   }
 
+  function isPastEvent(ev) {
+    var p = parseEventDate(ev.start_datetime);
+    var eventDate = new Date(p.year, p.month, p.day, 23, 59, 59);
+    var now = new Date();
+    if (p.year < 2026) return true;
+    return eventDate < now;
+  }
+
+  function createEventCard(ev, isPast) {
+    var p = parseEventDate(ev.start_datetime);
+    var formattedDate = monthAbbr[p.month] + " " + p.day + ", " + p.year;
+
+    var card = document.createElement("div");
+    card.className = "card card-hover overflow-hidden flex flex-col justify-between group cursor-pointer border border-gold/20";
+
+    var imgMarkup = "";
+    if (ev.hero_image_url && ev.hero_image_url.trim()) {
+      imgMarkup = '<div class="h-48 w-full overflow-hidden bg-cream-deep flex items-center justify-center p-2"><img src="' + ev.hero_image_url + '" alt="' + ev.title.replace(/"/g, '&quot;') + '" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy"></div>';
+    }
+
+    var badgeText = isPast
+      ? '<span class="inline-block w-2 h-2 rounded-full bg-ink-muted"></span>Past Event · ' + formattedDate
+      : '<span class="inline-block w-2 h-2 rounded-full bg-saffron"></span>' + formattedDate;
+
+    card.innerHTML = imgMarkup +
+      '<div class="p-6 flex-1 flex flex-col justify-between">' +
+        '<div>' +
+          '<div class="flex items-center gap-2 text-xs font-semibold text-saffron-dark uppercase tracking-wider">' +
+            badgeText +
+          '</div>' +
+          '<h3 class="font-serif text-xl font-semibold text-maroon-dark mt-2 group-hover:text-saffron-dark transition-colors">' + ev.title + '</h3>' +
+          '<p class="mt-2 text-sm text-ink-soft line-clamp-3">' + (ev.short_description || "") + '</p>' +
+        '</div>' +
+        '<div class="mt-5 pt-4 border-t border-gold/15 flex items-center justify-between">' +
+          '<span class="text-xs text-ink-muted truncate max-w-[170px]">' + (ev.location_text || "") + '</span>' +
+          '<span class="text-xs font-semibold text-maroon hover:text-saffron-dark shrink-0 flex items-center gap-1">Details →</span>' +
+        '</div>' +
+      '</div>';
+
+    card.addEventListener("click", function() {
+      openModal(ev);
+    });
+
+    return card;
+  }
+
   function renderList() {
-    var listGrid = document.getElementById("events-list-grid");
-    if (!listGrid) return;
-    listGrid.innerHTML = "";
+    var upcomingGrid = document.getElementById("events-upcoming-grid");
+    var pastGrid = document.getElementById("events-past-grid");
+    var summaryEl = document.getElementById("events-list-summary");
+    if (!upcomingGrid || !pastGrid) return;
+
+    upcomingGrid.innerHTML = "";
+    pastGrid.innerHTML = "";
+
+    var upcomingEvents = [];
+    var pastEvents = [];
 
     templeEvents.forEach(function(ev) {
-      var p = parseEventDate(ev.start_datetime);
-      var formattedDate = monthAbbr[p.month] + " " + p.day + ", " + p.year;
-
-      var card = document.createElement("div");
-      card.className = "card card-hover overflow-hidden flex flex-col justify-between group cursor-pointer border border-gold/20";
-
-      var imgMarkup = "";
-      if (ev.hero_image_url && ev.hero_image_url.trim()) {
-        imgMarkup = '<div class="h-48 w-full overflow-hidden bg-cream-deep flex items-center justify-center p-2"><img src="' + ev.hero_image_url + '" alt="' + ev.title.replace(/"/g, '&quot;') + '" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy"></div>';
+      if (isPastEvent(ev)) {
+        pastEvents.push(ev);
+      } else {
+        upcomingEvents.push(ev);
       }
-
-      card.innerHTML = imgMarkup +
-        '<div class="p-6 flex-1 flex flex-col justify-between">' +
-          '<div>' +
-            '<div class="flex items-center gap-2 text-xs font-semibold text-saffron-dark uppercase tracking-wider">' +
-              '<span class="inline-block w-2 h-2 rounded-full bg-saffron"></span>' +
-              formattedDate +
-            '</div>' +
-            '<h3 class="font-serif text-xl font-semibold text-maroon-dark mt-2 group-hover:text-saffron-dark transition-colors">' + ev.title + '</h3>' +
-            '<p class="mt-2 text-sm text-ink-soft line-clamp-3">' + (ev.short_description || "") + '</p>' +
-          '</div>' +
-          '<div class="mt-5 pt-4 border-t border-gold/15 flex items-center justify-between">' +
-            '<span class="text-xs text-ink-muted truncate max-w-[170px]">' + (ev.location_text || "") + '</span>' +
-            '<span class="text-xs font-semibold text-maroon hover:text-saffron-dark shrink-0 flex items-center gap-1">Details →</span>' +
-          '</div>' +
-        '</div>';
-
-      card.addEventListener("click", function() {
-        openModal(ev);
-      });
-      listGrid.appendChild(card);
     });
+
+    upcomingEvents.sort(function(a, b) {
+      var da = parseEventDate(a.start_datetime);
+      var db = parseEventDate(b.start_datetime);
+      return new Date(da.year, da.month, da.day) - new Date(db.year, db.month, db.day);
+    });
+
+    pastEvents.sort(function(a, b) {
+      var da = parseEventDate(a.start_datetime);
+      var db = parseEventDate(b.start_datetime);
+      return new Date(db.year, db.month, db.day) - new Date(da.year, da.month, da.day);
+    });
+
+    if (upcomingEvents.length === 0) {
+      var emptyUp = document.createElement("div");
+      emptyUp.className = "col-span-full py-12 text-center text-ink-muted text-sm bg-white rounded-2xl border border-gold/20 p-8";
+      emptyUp.textContent = "No upcoming events scheduled at this time. Please check back soon.";
+      upcomingGrid.appendChild(emptyUp);
+    } else {
+      upcomingEvents.forEach(function(ev) {
+        upcomingGrid.appendChild(createEventCard(ev, false));
+      });
+    }
+
+    if (pastEvents.length === 0) {
+      var emptyPast = document.createElement("div");
+      emptyPast.className = "col-span-full py-12 text-center text-ink-muted text-sm bg-white rounded-2xl border border-gold/20 p-8";
+      emptyPast.textContent = "No past events to display.";
+      pastGrid.appendChild(emptyPast);
+    } else {
+      pastEvents.forEach(function(ev) {
+        pastGrid.appendChild(createEventCard(ev, true));
+      });
+    }
+
+    var listTabUpBtn = document.getElementById("list-tab-upcoming");
+    var listTabPastBtn = document.getElementById("list-tab-past");
+    if (listTabUpBtn) {
+      listTabUpBtn.textContent = "Upcoming Events (" + upcomingEvents.length + ")";
+    }
+    if (listTabPastBtn) {
+      listTabPastBtn.textContent = "Past Events (" + pastEvents.length + ")";
+    }
+    if (summaryEl) {
+      summaryEl.textContent = upcomingEvents.length + " upcoming · " + pastEvents.length + " past";
+    }
+  }
+
+  function setView(viewName) {
+    var tabCal = document.getElementById("tab-calendar");
+    var tabList = document.getElementById("tab-list");
+    var tabPast = document.getElementById("tab-past");
+    var calView = document.getElementById("events-calendar-view");
+    var listView = document.getElementById("events-list-view");
+    var listTabUp = document.getElementById("list-tab-upcoming");
+    var listTabPast = document.getElementById("list-tab-past");
+    var upcomingGrid = document.getElementById("events-upcoming-grid");
+    var pastGrid = document.getElementById("events-past-grid");
+
+    var activeCls = "px-5 py-2 text-sm font-semibold rounded-full bg-saffron text-white shadow-sm transition-all cursor-pointer";
+    var inactiveCls = "px-5 py-2 text-sm font-semibold rounded-full text-maroon hover:text-saffron-dark transition-all cursor-pointer";
+
+    if (viewName === "calendar") {
+      if (tabCal) { tabCal.className = activeCls; tabCal.setAttribute("aria-selected", "true"); }
+      if (tabList) { tabList.className = inactiveCls; tabList.setAttribute("aria-selected", "false"); }
+      if (tabPast) { tabPast.className = inactiveCls; tabPast.setAttribute("aria-selected", "false"); }
+      if (calView) calView.classList.remove("hidden");
+      if (listView) listView.classList.add("hidden");
+    } else if (viewName === "upcoming") {
+      if (tabCal) { tabCal.className = inactiveCls; tabCal.setAttribute("aria-selected", "false"); }
+      if (tabList) { tabList.className = activeCls; tabList.setAttribute("aria-selected", "true"); }
+      if (tabPast) { tabPast.className = inactiveCls; tabPast.setAttribute("aria-selected", "false"); }
+      if (calView) calView.classList.add("hidden");
+      if (listView) listView.classList.remove("hidden");
+      if (listTabUp) { listTabUp.className = activeCls; listTabUp.setAttribute("aria-selected", "true"); }
+      if (listTabPast) { listTabPast.className = inactiveCls; listTabPast.setAttribute("aria-selected", "false"); }
+      if (upcomingGrid) upcomingGrid.classList.remove("hidden");
+      if (pastGrid) pastGrid.classList.add("hidden");
+    } else if (viewName === "past") {
+      if (tabCal) { tabCal.className = inactiveCls; tabCal.setAttribute("aria-selected", "false"); }
+      if (tabList) { tabList.className = inactiveCls; tabList.setAttribute("aria-selected", "false"); }
+      if (tabPast) { tabPast.className = activeCls; tabPast.setAttribute("aria-selected", "true"); }
+      if (calView) calView.classList.add("hidden");
+      if (listView) listView.classList.remove("hidden");
+      if (listTabUp) { listTabUp.className = inactiveCls; listTabUp.setAttribute("aria-selected", "false"); }
+      if (listTabPast) { listTabPast.className = activeCls; listTabPast.setAttribute("aria-selected", "true"); }
+      if (upcomingGrid) upcomingGrid.classList.add("hidden");
+      if (pastGrid) pastGrid.classList.remove("hidden");
+    }
   }
 
   document.addEventListener("DOMContentLoaded", function() {
     var tabCal = document.getElementById("tab-calendar");
     var tabList = document.getElementById("tab-list");
-    var calView = document.getElementById("events-calendar-view");
-    var listView = document.getElementById("events-list-view");
+    var tabPast = document.getElementById("tab-past");
+    var listTabUp = document.getElementById("list-tab-upcoming");
+    var listTabPast = document.getElementById("list-tab-past");
 
-    if (tabCal && tabList && calView && listView) {
-      tabCal.addEventListener("click", function() {
-        tabCal.className = "px-5 py-2 text-sm font-semibold rounded-full bg-saffron text-white shadow-sm transition-all cursor-pointer";
-        tabCal.setAttribute("aria-selected", "true");
-        tabList.className = "px-5 py-2 text-sm font-semibold rounded-full text-maroon hover:text-saffron-dark transition-all cursor-pointer";
-        tabList.setAttribute("aria-selected", "false");
-        calView.classList.remove("hidden");
-        listView.classList.add("hidden");
-      });
-
-      tabList.addEventListener("click", function() {
-        tabList.className = "px-5 py-2 text-sm font-semibold rounded-full bg-saffron text-white shadow-sm transition-all cursor-pointer";
-        tabList.setAttribute("aria-selected", "true");
-        tabCal.className = "px-5 py-2 text-sm font-semibold rounded-full text-maroon hover:text-saffron-dark transition-all cursor-pointer";
-        tabCal.setAttribute("aria-selected", "false");
-        listView.classList.remove("hidden");
-        calView.classList.add("hidden");
-      });
+    if (tabCal) {
+      tabCal.addEventListener("click", function() { setView("calendar"); });
+    }
+    if (tabList) {
+      tabList.addEventListener("click", function() { setView("upcoming"); });
+    }
+    if (tabPast) {
+      tabPast.addEventListener("click", function() { setView("past"); });
+    }
+    if (listTabUp) {
+      listTabUp.addEventListener("click", function() { setView("upcoming"); });
+    }
+    if (listTabPast) {
+      listTabPast.addEventListener("click", function() { setView("past"); });
     }
 
     var prevBtn = document.getElementById("cal-prev");

@@ -41,7 +41,7 @@ sections:
 - Daily aartis & timings
 - `#weekly` — Weekly Poojas
 - `#monthly` — Monthly Poojas
-- `#events-calendar` — Events Calendar & Celebrations (Calendar & List view)
+- `#events-calendar` — Events Calendar & Celebrations (Calendar, Upcoming & Past Events tabs)
 - `#yearly-calendar` — Yearly Calendar (PDF embed & download)
 - `#livestream` — Aarti Live Stream
 
